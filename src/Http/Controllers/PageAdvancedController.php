@@ -2,12 +2,12 @@
 
 namespace Infinety\TemplyPages\Http\Controllers;
 
+use App\Models\Tenant\Page;
+use App\Models\Tenant\Template;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Infinety\TemplyPages\Http\Services\FieldsService;
 use Infinety\TemplyPages\Http\Traits\FieldsTrait;
-use Infinety\TemplyPages\Models\Page;
-use Infinety\TemplyPages\Models\Template;
 
 class PageAdvancedController extends Controller
 {

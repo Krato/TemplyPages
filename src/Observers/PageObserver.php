@@ -2,9 +2,9 @@
 
 namespace Infinety\TemplyPages\Observers;
 
+use App\Models\Tenant\Page;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Infinety\TemplyPages\Models\Page;
 
 class PageObserver
 {

@@ -2,8 +2,8 @@
 
 namespace Infinety\TemplyPages\Http\Services;
 
+use App\Models\Tenant\Template;
 use Infinety\TemplyPages\Http\Services\Field;
-use Infinety\TemplyPages\Models\Template;
 
 class FieldsService
 {

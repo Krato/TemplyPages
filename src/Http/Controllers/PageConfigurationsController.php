@@ -2,9 +2,9 @@
 
 namespace Infinety\TemplyPages\Http\Controllers;
 
+use App\Models\Tenant\Page;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Infinety\TemplyPages\Models\Page;
 
 class PageConfigurationsController extends Controller
 {

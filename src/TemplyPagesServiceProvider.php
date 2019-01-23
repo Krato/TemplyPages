@@ -2,11 +2,11 @@
 
 namespace Infinety\TemplyPages;
 
+use App\Models\Tenant\Page;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Infinety\TemplyPages\Http\Middleware\Authorize;
-use Infinety\TemplyPages\Models\Page;
 use Infinety\TemplyPages\Observers\PageObserver;
 use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Nova;

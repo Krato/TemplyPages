@@ -2,10 +2,10 @@
 
 namespace Infinety\TemplyPages\Resources;
 
+use App\Models\Tenant\Template;
 use App\Nova\Resource;
 use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Http\Request;
-use Infinety\TemplyPages\Models\Template;
 use Infinety\TemplyPages\PageResourceTool;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;

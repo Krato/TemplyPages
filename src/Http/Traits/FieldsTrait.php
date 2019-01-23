@@ -2,8 +2,8 @@
 
 namespace Infinety\TemplyPages\Http\Traits;
 
-use Infinety\TemplyPages\Models\Template;
-use Infinety\TemplyPages\Models\TemplateField;
+use App\Models\Tenant\Template;
+use App\Models\Tenant\TemplateField;
 use Webpatser\Uuid\Uuid;
 
 trait FieldsTrait

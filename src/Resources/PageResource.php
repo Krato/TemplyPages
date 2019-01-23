@@ -2,9 +2,9 @@
 
 namespace Infinety\TemplyPages\Resources;
 
+use App\Models\Tenant\Page;
 use App\Nova\Resource;
 use Illuminate\Http\Request;
-use Infinety\TemplyPages\Models\Page;
 use Infinety\TemplyPages\PageConfigurationResourceTool;
 use Infinety\TemplyPages\Resources\TemplateResource;
 use Infinety\TemplyPages\TemplyPagesField;
