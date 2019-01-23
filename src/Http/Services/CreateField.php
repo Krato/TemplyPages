@@ -219,6 +219,10 @@ class CreateField
     {
         $disk = 'public';
 
+        if ($this->jsonData['disk']) {
+            $disk = $this->jsonData['disk'];
+        }
+
         $newData = [
             'type'         => $this->jsonData['type'],
             'component'    => 'file-field',

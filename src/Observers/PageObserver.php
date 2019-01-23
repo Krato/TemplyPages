@@ -86,9 +86,6 @@ class PageObserver
         $fieldsArray = json_decode(json_encode($this->page->template->fields), true);
         $data = json_decode($this->page->data, true);
 
-        logger('Mis datos');
-        logger($data);
-
         $pageOld = Page::find($this->page->id);
         $dirtyData = json_decode($pageOld->data, true);
 
@@ -133,12 +130,13 @@ class PageObserver
                 $extension = pathinfo($fieldItem['name'], PATHINFO_EXTENSION);
 
                 $fileName = md5($fieldItem['name']).'.'.$extension;
+                $fileName = 'pages'.'/'.$fileName;
                 $binaryData = array_last(explode(',', $fieldItem['data']));
                 $binaryData = base64_decode($binaryData);
 
-                if (isset($item['field']['data']['disk'])) {
-                    $path = Storage::disk($item['field']['data']['disk'])->put($fileName, $binaryData);
-                    $url = Storage::disk($item['field']['data']['disk'])->url($fileName);
+                if (isset($item['data']['disk'])) {
+                    $path = Storage::disk($item['data']['disk'])->put($fileName, $binaryData);
+                    $url = Storage::disk($item['data']['disk'])->url($fileName);
                 } else {
                     $path = Storage::disk('public')->put($fileName, $binaryData);
                     $url = Storage::disk('public')->url($fileName);
