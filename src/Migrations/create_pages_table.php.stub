@@ -1,0 +1,60 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreatePageAdvancedTables extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('templates', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->json('extra')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('fields', function (Blueprint $table) {
+            $table->increments('id');
+            $table->uuid('uuid')->nullable();
+            $table->string('name');
+            $table->string('component');
+            $table->unsignedInteger('template_id');
+            $table->nestedSet();
+            $table->json('data')->nullable();
+            $table->timestamps();
+            $table->foreign('template_id')->references('id')->on('templates');
+        });
+
+        Schema::create('pages', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('template_id')->nullable();
+            $table->unsignedInteger('template_type')->default(0);
+            $table->integer('type')->default(1);
+            $table->string('name');
+            $table->json('data')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+            $table->foreign('template_id')->references('id')->on('templates')->onDelete('SET NULL');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('pages');
+        Schema::dropIfExists('fields');
+        Schema::dropIfExists('templates');
+    }
+}

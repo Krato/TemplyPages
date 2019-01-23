@@ -1,0 +1,54 @@
+{
+    "name": "infinety-es/temply-pages",
+    "description": "Temply pages",
+    "keywords": [
+        "laravel",
+        "nova", 
+        "temply"
+    ],
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../laravel-nova"
+        }
+    ],
+    "homepage": "https://github.com/infinety/temply-pages",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Eric Lagarda",
+            "email": "eric@infinety.es",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0",
+        "epartment/nova-dependency-container": "^1.1",
+        "kalnoy/nestedset": "^4.3",
+        "webpatser/laravel-uuid": "^3.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^3.6",
+        "phpunit/phpunit": "7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Infinety\\TemplyPages\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Infinety\\TemplyPages\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": []
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

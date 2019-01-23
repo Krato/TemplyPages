@@ -1,0 +1,103 @@
+// Nova Tool CSS
+.placeholder:after {
+    display: flex;
+    content: "Add some fields";
+    height: 100px;
+    vertical-align: middle;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    // margin: .75rem 0;
+}
+
+#test{
+	min-height: 300px;
+}
+
+#fieldlist {
+    border-top-width: 0;
+
+	&:last-child {
+		border-bottom-width:0;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+
+		
+}
+
+
+.section {
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-bottom-width: 1px;
+    border-color: #bacad6;
+    
+	border-bottom-left-radius: .5rem;
+	border-bottom-right-radius: .5rem;
+
+	// &:last-child {
+	// 	margin-bottom: 0;
+	// 	border-bottom-width:0;
+	// 	border-bottom-left-radius: 0;
+	// 	border-bottom-right-radius: 0;
+	// }
+
+	.header {
+		background-color: #f4f7fa;
+	    font-weight: 800;
+    	font-size: 1rem;
+		color: #7c858e;
+        border-top-width: 1px;
+    	border-color: #bacad6;
+    	border-bottom-width: 2px;
+        border-top-left-radius: .5rem;
+    	border-top-right-radius: .5rem;
+	    padding: .75rem;
+	    letter-spacing: .05em;
+
+	    .fields {
+	    	font-size: .75rem;
+	    	margin-left: auto;
+	    }
+	}
+
+	
+	.item-field {
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+
+		.actions {
+			margin-left: auto;
+		}
+
+		.info-field {
+			overflow: hidden;
+			opacity: 0;
+			pointer-events: none;
+			max-height: 0;
+		}
+
+		&.editing >.info-field {
+			opacity: 1;
+		    pointer-events: auto;
+		    max-height: 1200px;
+		}
+
+	}
+
+}
+
+.buttons-section {
+	border-radius: .5rem;
+}
+
+
+
+
+
+// #template-fields.is-empty:hover:after {
+//   background-color: yellow;
+// }

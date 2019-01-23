@@ -1,0 +1,83 @@
+.placeholder:after {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  content: "Add some fields";
+  height: 100px;
+  vertical-align: middle;
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#test {
+  min-height: 300px;
+}
+
+#fieldlist {
+  border-top-width: 0;
+}
+
+#fieldlist:last-child {
+  border-bottom-width: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.section {
+  border-right-width: 1px;
+  border-left-width: 1px;
+  border-bottom-width: 1px;
+  border-color: #bacad6;
+  border-bottom-left-radius: .5rem;
+  border-bottom-right-radius: .5rem;
+}
+
+.section .header {
+  background-color: #f4f7fa;
+  font-weight: 800;
+  font-size: 1rem;
+  color: #7c858e;
+  border-top-width: 1px;
+  border-color: #bacad6;
+  border-bottom-width: 2px;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
+  padding: .75rem;
+  letter-spacing: .05em;
+}
+
+.section .header .fields {
+  font-size: .75rem;
+  margin-left: auto;
+}
+
+.section .item-field:last-child {
+  margin-bottom: 0;
+}
+
+.section .item-field .actions {
+  margin-left: auto;
+}
+
+.section .item-field .info-field {
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  max-height: 0;
+}
+
+.section .item-field.editing > .info-field {
+  opacity: 1;
+  pointer-events: auto;
+  max-height: 1200px;
+}
+
+.buttons-section {
+  border-radius: .5rem;
+}
+
