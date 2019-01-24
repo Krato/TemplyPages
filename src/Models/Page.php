@@ -63,6 +63,6 @@ class Page extends Model
 
     public function getUrlAttribute()
     {
-        return 'http://temply.on/link-to-page/';
+        return '/'.str_slug($this->name);
     }
 }

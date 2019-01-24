@@ -1,81 +1,78 @@
 <template>
-	<div>
-		<heading class="mb-6">Pages</heading>
+    <div>
+        <heading class="mb-6">Pages</heading>
 
-	    <div class="flex justify-between">
-	            <div class="relative h-9 flex items-center mb-6">
-	                <icon type="search" class="absolute ml-3 text-70" />
+        <div class="flex justify-between">
+            <div class="relative h-9 flex items-center mb-6">
+                <icon type="search" class="absolute ml-3 text-70" />
 
-	                <input v-model="search"
-	                       class="appearance-none form-control form-input w-search pl-search"
-	                       placeholder="Search"
-	                       type="search"
-	                >
-	            </div>
+                <input v-model="search"
+                       class="appearance-none form-control form-input w-search pl-search"
+                       placeholder="Search"
+                       type="search"
+                >
+            </div>
 
-	            <span class="ml-auto mb-6">
-	                <button @click="createModalOpened = !createModalOpened"
-	                        class="btn btn-default btn-primary"
-	                >
-	                    {{ __('Create') }}
-	                </button>
-	            </span>
-	        </div>
+            <span class="ml-auto mb-6">
+                <button @click="createModalOpened = !createModalOpened"
+                        class="btn btn-default btn-primary"
+                >{{ __('Create') }}
+                </button>
+            </span>
+        </div>
 
-	        <card>
-	            <custom-table :fields="filteredFields" :sort="sortBy" :resourceName="resourceName" :deleteResource="deleteResource"
-	            ></custom-table>
-	        </card>
+        <card>
+            <custom-table :fields="filteredFields" :sort="sortBy" :resourceName="resourceName" :deleteResource="deleteResource"
+            ></custom-table>
+        </card>
 
-             <portal to="modals">
-                <transition name="fade">
-                    <modal
-                        ref="modalCreate"
-                        v-if="createModalOpened"
-                        :name="'modalCreate'"
-                        :align="'flex justify-end'"
-                        :width="400"
-                    >
-                        <div slot="container">
-                            <h2 class="mb-6 text-90 font-normal text-xl">{{ __('Create new') }} {{ __('page') }}</h2>
-                            
-                            <p class="text-80 leading-normal">
-                                {{ __('What kind of oage you want to create') }}
-                            </p>
+        <portal to="modals">
+            <transition name="fade">
+                <modal
+                    ref="modalCreate"
+                    v-if="createModalOpened"
+                    :name="'modalCreate'"
+                    :align="'flex justify-end'"
+                    :width="400"
+                >
+                    <div slot="container">
+                        <h2 class="mb-6 text-90 font-normal text-xl">{{ __('Create new') }} {{ __('page') }}</h2>
+                        <p class="text-80 leading-normal">
+                            {{ __('What kind of oage you want to create') }}
+                        </p>
+                    </div>
+                    <div slot="buttons">
+                        <div class="ml-auto">
+                            <button
+                                type="button"
+                                @click.prevent="closeModal"
+                                class="btn text-80 font-normal h-9 px-3 mr-3 btn-link"
+                            >
+                                {{ __('Cancel') }}
+                            </button>
+
+                            <button
+                                id="confirm-overwrite-button"
+                                ref="confirmButton"
+                                @click.prevent="confirmItemDelete"
+                                class="btn btn-default btn-danger"
+                            >
+                                {{ __('Yes, remove!') }}
+                            </button>
                         </div>
-                        <div slot="buttons">
-                            <div class="ml-auto">
-                                <button
-                                    type="button"
-                                    @click.prevent="closeModal"
-                                    class="btn text-80 font-normal h-9 px-3 mr-3 btn-link"
-                                >
-                                    {{ __('Cancel') }}
-                                </button>
-
-                                <button
-                                    id="confirm-overwrite-button"
-                                    ref="confirmButton"
-                                    @click.prevent="confirmItemDelete"
-                                    class="btn btn-default btn-danger"
-                                >
-                                    {{ __('Yes, remove!') }}
-                                </button>
-                            </div>
-                        </div>
-                    </modal>
-                </transition>
-            </portal>
-	    </div>
-	</div>
+                    </div>
+                </modal>
+            </transition>
+        </portal>
+    </div>
 </template>
 
 <script>
 import CustomTable from './CustomTable';
-import Modal from './Modal'
+import Modal from './Modal';
 
 export default {
-    components: { CustomTable, Modal},
+    components: { CustomTable, Modal },
     data() {
         return {
             fields: [],
@@ -86,17 +83,19 @@ export default {
             },
             showNova: false,
             resourceName: 'pages',
-            createModalOpened: false
-        }
+            createModalOpened: false,
+        };
     },
     mounted() {
         this.getData();
     },
     methods: {
         getData() {
-            Nova.request().get('/nova-vendor/infinety/temply-pages/pages').then(response => {
-                this.fields = response.data;
-            });
+            Nova.request()
+                .get('/nova-vendor/infinety/temply-pages/pages')
+                .then(response => {
+                    this.fields = response.data;
+                });
         },
         sortBy(field) {
             this.sort.field = field;
@@ -113,23 +112,25 @@ export default {
             });
         },
         toggleNova() {
-            this.showNova = ! this.showNova;
+            this.showNova = !this.showNova;
         },
 
         deleteResource(field) {
-            Nova.request().delete('/nova-vendor/infinety/temply-pages/page/'+field.id+'/destroy').then(response => {
-                this.getData()
-            });
-        }
+            Nova.request()
+                .delete('/nova-vendor/infinety/temply-pages/page/' + field.id + '/destroy')
+                .then(() => {
+                    this.getData();
+                });
+        },
     },
     computed: {
         filteredFields() {
-            if (! this.search.length) {
+            if (!this.search.length) {
                 return this.fields;
             }
             const regex = this.searchRegex;
             // User input is not a valid regular expression, show no results
-            if (! regex) {
+            if (!regex) {
                 return {};
             }
             return this.fields.filter(route => {
@@ -141,8 +142,7 @@ export default {
                                 matchesSearch = true;
                             }
                         });
-                    }
-                    else if (regex.test(route[key])) {
+                    } else if (regex.test(route[key])) {
                         matchesSearch = true;
                     }
                 }
@@ -151,12 +151,12 @@ export default {
         },
         searchRegex() {
             try {
-                return new RegExp('(' + this.search + ')','i');
+                return new RegExp('(' + this.search + ')', 'i');
             } catch (e) {
                 return false;
             }
-        }
-    }
+        },
+    },
 };
 </script>
 

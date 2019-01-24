@@ -3,5 +3,3 @@ Nova.booting(Vue => {
     Vue.component('form-temply-pages-field', require('./field/FormField'));
     Vue.component('repeater-field', require('./field/RepeaterField'));
 });
-
-

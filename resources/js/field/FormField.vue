@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="py-6 px-8 w-1/2">
-                    <a class="btn btn-default btn-primary" :href="page.url">{{ __('Click here to edit') }}</a>
+                    <a class="btn btn-default btn-primary" :href="page.url">{{ __('Click here to edit') }}</a>
                 </div>
             </div>
         </div>
@@ -60,7 +60,7 @@ export default {
         fieldValues: {},
         isCustom: false,
         page: {},
-        customValues: {}
+        customValues: {},
     }),
 
     created() {
@@ -69,14 +69,16 @@ export default {
     },
 
     methods: {
-        getPageInfo(){
+        getPageInfo() {
             return api.pageInfo(this.resourceId).then(page => {
-                this.page = page
+                this.templateId = page.template_id;
+                this.page = page;
                 if (this.page.isCustom) {
-                    this.isCustom = true
+                    this.isCustom = true;
                 }
 
                 this.registerDependencyWatchers(this.$parent);
+                this.updateTemplateFields();
             });
         },
 
@@ -201,12 +203,10 @@ export default {
         },
 
         setNewValue(key, val) {
-
             if (val) {
                 this.$set(this.customValues, key, val);
             } else {
                 this.$set(this.customValues, key, '');
-                
             }
 
             this.value = JSON.stringify(this.customValues);
@@ -220,16 +220,15 @@ export default {
             // }
 
             if (!section.children) {
-                return true
+                return true;
             }
-
 
             if (Object.keys(section.children).length == 0) {
                 return true;
             }
 
             return false;
-        }
+        },
     },
     watch: {
         sections: function(sections) {

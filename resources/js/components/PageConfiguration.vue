@@ -3,7 +3,7 @@
         <template v-if="isCustom">
             <!-- {{ __('This is a custom page and no has predefined designs.') }} -->
             <div class="w-3/4 py-4">
-                <a class="btn btn-default btn-primary" :href="page.url">{{ __('Click here to edit your page') }}</a>
+                <a class="btn btn-default btn-primary" :href="page.url">{{ __('Click here to edit your page') }}</a>
             </div>
         </template>
         <template v-if="!isCustom">
@@ -19,8 +19,8 @@
             </div>
 
             <div class="">
-            	<div class="mt-4 flex flex-wrap  flex -mx-2">
-                    <div class="w-1/5 px-2"  v-for="(template, index) in configurations" @click="selectTemplate(template)">
+                <div class="mt-4 flex flex-wrap  flex -mx-2">
+                    <div class="w-1/5 px-2"  v-for="(template, index) in configurations" :key="index" @click="selectTemplate(template)">
                         <div class="get-preview cursor-pointer hover:opacity-50">
                             <div class="bg-custom bg-white w-full rounded shadow-md p-4" :class="{'active' : template.selected, 'choosen': isChoosen(template) }">
                                 <div class="flex flex-wrap">
@@ -28,7 +28,7 @@
                                         <span class="text-5xl ">{{ index + 1 }}</span>
                                     </div>
                                     <div class="flex flex-col w-2/3  justify-center">
-                                        <h5 class="group font-medium uppercase">{{ group.name }} {{ __('template') }}</h5>
+                                        <h5 class="group font-medium uppercase">{{ group.name }} {{ __('template') }}</h5>
                                         <h3 class="uppercase">{{ template.name }}</h3>
                                     </div>
                                     
@@ -73,7 +73,7 @@
 <script>
 import api from '../api.js';
 export default {
-	props: ['resourceName', 'resourceId', 'field'],
+    props: ['resourceName', 'resourceId', 'field'],
     data: () => ({
         isCustom: false,
         page: {},
@@ -81,58 +81,58 @@ export default {
         configurations: {},
         currentTemplate: false,
         previewUrl: '',
-        choosen: ''
+        choosen: '',
     }),
 
     methods: {
-    	getConfigurations() {
-    		return api.configurations(this.resourceId).then(result => {
-                this.page = result.page
-                this.isCustom = result.isCustom
+        getConfigurations() {
+            return api.configurations(this.resourceId).then(result => {
+                this.page = result.page;
+                this.isCustom = result.isCustom;
                 if (this.isCustom) {
                     // this.$parent.$parent.panel.name = 'Edit your custom page'
                 } else {
                     // this.$parent.$parent.panel.component = 'panel'
-                    this.group = result.group
-                    this.choosen = result.current
-                    this.configurations = this.parseConfigurations()
+                    this.group = result.group;
+                    this.choosen = result.current;
+                    this.configurations = this.parseConfigurations();
                 }
-                
             });
-    	},
+        },
 
         selectTemplate(template) {
             this.resetSelecteds();
-            template.selected = true
+            template.selected = true;
             this.currentTemplate = template;
-            this.previewUrl = 'https://images.weserv.nl/?url=https://i.ibb.co/vkf98nz/Image-and-text.jpg'
+            this.previewUrl =
+                'https://images.weserv.nl/?url=https://i.ibb.co/vkf98nz/Image-and-text.jpg';
         },
 
         parseConfigurations() {
             if (!this.group.templates) {
-                return {}
+                return {};
             }
-            return this.group.templates.map((item) => {
+            return this.group.templates.map(item => {
                 this.$set(item, 'selected', false);
-                return item
-            })
+                return item;
+            });
         },
 
         saveDesign() {
-            this.currentTemplate
-            return api.setDesign(this.resourceId, this.currentTemplate.id).then(result => {
-                this.$toasted.show(this.__('Design saved!'), { type: 'success' })
-                this.previewUrl = ''
+            this.currentTemplate;
+            return api.setDesign(this.resourceId, this.currentTemplate.id).then(() => {
+                this.$toasted.show(this.__('Design saved!'), { type: 'success' });
+                this.previewUrl = '';
                 this.resetSelecteds();
-                this.getConfigurations()
+                this.getConfigurations();
             });
         },
 
         resetSelecteds() {
-            this.currentTemplate = false
-            this.configurations.forEach((item) => {
-                item.selected = false
-            })
+            this.currentTemplate = false;
+            this.configurations.forEach(item => {
+                item.selected = false;
+            });
         },
 
         isChoosen(template) {
@@ -141,16 +141,14 @@ export default {
             }
 
             return false;
-        }
+        },
     },
 
-    computed: {
-        
-    },
+    computed: {},
 
     async created() {
         // this.$parent.$parent.panel.component = 'card'
-    	await this.getConfigurations()
+        await this.getConfigurations();
     },
 };
 </script>

@@ -7,7 +7,7 @@ export default {
 
     pageInfo(pageId) {
         return window.axios
-            .get('/nova-vendor/infinety/temply-pages/page-info/'+pageId)
+            .get('/nova-vendor/infinety/temply-pages/page-info/' + pageId)
             .then(response => response.data);
     },
 
@@ -46,8 +46,8 @@ export default {
 
     configurations(page) {
         return window.axios
-            .get('/nova-vendor/infinety/temply-pages/configurations',  {
-                params: {page: page}
+            .get('/nova-vendor/infinety/temply-pages/configurations', {
+                params: { page: page },
             })
             .then(response => response.data);
     },
@@ -59,6 +59,5 @@ export default {
                 design: design,
             })
             .then(response => response.data);
-        
-    }
+    },
 };

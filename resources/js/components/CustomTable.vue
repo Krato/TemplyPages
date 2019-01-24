@@ -2,104 +2,104 @@
     <div class="overflow-hidden overflow-x-auto relative">
         <table class="table w-full" cellpadding="0" cellspacing="0">
             <thead>
-            <tr>
-                <th v-for="column in columns" :class="{'text-left': column.sortable, 'text-right': !column.sortable}">
-                    <sortable-icon
-                        v-if="column.sortable"
-                        @sort="sort(column.attribute)"
-                        :resource-name="resourceName"
-                        :uri-key="column.attribute"
-                    >
-                        {{ column.label }}
-                    </sortable-icon>
-                </th>
-            </tr>
+                <tr>
+                    <th v-for="column in columns" :key="column" :class="{'text-left': column.sortable, 'text-right': !column.sortable}">
+                        <sortable-icon
+                            v-if="column.sortable"
+                            @sort="sort(column.attribute)"
+                            :resource-name="resourceName"
+                            :uri-key="column.attribute"
+                        >
+                            {{ column.label }}
+                        </sortable-icon>
+                    </th>
+                </tr>
             </thead>
             <tbody>
-            <tr v-for="(field, index) in fields"
-                :key="index"
-                :field="field"
-            >
-                <td class="whitespace-no-wrap text-left">
-                    {{ field.id }}
-                </td>
-                <td class="whitespace-no-wrap text-left">
-                    {{ field.name }}
-                </td>
-                <td class="whitespace-no-wrap text-left">
-                    <template v-if="field.template">
-                        {{ field.template.name }}
-                    </template>
+                <tr v-for="(field, index) in fields"
+                    :key="index"
+                    :field="field"
+                >
+                    <td class="whitespace-no-wrap text-left">
+                        {{ field.id }}
+                    </td>
+                    <td class="whitespace-no-wrap text-left">
+                        {{ field.name }}
+                    </td>
+                    <td class="whitespace-no-wrap text-left">
+                        <template v-if="field.template">
+                            {{ field.template.name }}
+                        </template>
 
-                    <template v-else>
-                        {{ 'Custom' }}
-                    </template>
+                        <template v-else>
+                            {{ 'Custom' }}
+                        </template>
                     
-                </td>
-                <td class="td-fit text-right pr-6">
+                    </td>
+                    <td class="td-fit text-right pr-6">
 
-                    <template v-if="!field.isCustom">
+                        <template v-if="!field.isCustom">
 
-                        <!-- View Resource Link -->
-                        <router-link
-                            :dusk="`${field.id}-view-button`"
-                            class="cursor-pointer text-70 hover:text-primary mr-3"
-                            :to="{ name: 'detail', params: {
-                                resourceName: resourceName,
-                                resourceId: field.id
-                            }}"
-                            :title="__('View')"
-                        >
-                            <icon type="view" width="22" height="18" view-box="0 0 22 16" />
-                        </router-link>
-
-                        <!-- Edit Resource Link -->
-                        <router-link
-                            v-if="!field.isCustom"
-                            :dusk="`${field.id}-edit-button`"
-                            class="cursor-pointer text-70 hover:text-primary mr-3"
-                            :to="{
-                                name: 'edit',
-                                params: {
+                            <!-- View Resource Link -->
+                            <router-link
+                                :dusk="`${field.id}-view-button`"
+                                class="cursor-pointer text-70 hover:text-primary mr-3"
+                                :to="{ name: 'detail', params: {
                                     resourceName: resourceName,
                                     resourceId: field.id
-                                },
-                                query: {
-                                    viaResource: '',
-                                    viaResourceId: '',
-                                    viaRelationship: ''
-                                }
-                            }"
-                            :title="__('Edit')"
-                        >
-                            <icon type="edit" />
-                        </router-link>
+                                }}"
+                                :title="__('View')"
+                            >
+                                <icon type="view" width="22" height="18" view-box="0 0 22 16" />
+                            </router-link>
 
-                    </template>
+                            <!-- Edit Resource Link -->
+                            <router-link
+                                v-if="!field.isCustom"
+                                :dusk="`${field.id}-edit-button`"
+                                class="cursor-pointer text-70 hover:text-primary mr-3"
+                                :to="{
+                                    name: 'edit',
+                                    params: {
+                                        resourceName: resourceName,
+                                        resourceId: field.id
+                                    },
+                                    query: {
+                                        viaResource: '',
+                                        viaResourceId: '',
+                                        viaRelationship: ''
+                                    }
+                                }"
+                                :title="__('Edit')"
+                            >
+                                <icon type="edit" />
+                            </router-link>
 
-                    <template  v-else>
-                        <!-- Edit Resource Link -->
-                        <a :href="'/nova-vendor/infinety/temply-pages/go-to/'+field.id"
-                            class="cursor-pointer text-70 hover:text-primary mr-3"
-                            :title="__('Edit')"
-                        >
-                            <icon type="edit" />
-                        </a>
+                        </template>
 
-                    </template>
+                        <template  v-else>
+                            <!-- Edit Resource Link -->
+                            <a :href="'/nova-vendor/infinety/temply-pages/go-to/'+field.id"
+                               class="cursor-pointer text-70 hover:text-primary mr-3"
+                               :title="__('Edit')"
+                            >
+                                <icon type="edit" />
+                            </a>
+
+                        </template>
                     
-                    <!-- Delete Resource Link -->
-                    <button
-                        :dusk="`${field.id}-delete-button`"
-                        class="appearance-none cursor-pointer text-70 hover:text-primary mr-3"
-                        @click.prevent="openDeleteModal(field)"
-                        :title="__('Delete')"
-                    >
-                        <icon />
-                    </button>
+                        <!-- Delete Resource Link -->
+                        <button
+                            :dusk="`${field.id}-delete-button`"
+                            class="appearance-none cursor-pointer text-70 hover:text-primary mr-3"
+                            @click.prevent="openDeleteModal(field)"
+                            :title="__('Delete')"
+                        >
+                            <icon />
+                        </button>
 
-                </td>
-            </tr>
+                    </td>
+                </tr>
             </tbody>
         </table>
 
@@ -141,22 +141,22 @@ export default {
             {
                 label: 'ID',
                 attribute: 'id',
-                sortable: true
+                sortable: true,
             },
             {
                 label: 'Name',
                 attribute: 'name',
-                sortable: true
+                sortable: true,
             },
             {
                 label: 'Template',
                 attribute: 'template',
-                sortable: true
+                sortable: true,
             },
             {
                 label: 'Actions',
                 attribute: 'actions',
-                sortable: false
+                sortable: false,
             },
         ],
         deleteModalOpen: false,
@@ -173,29 +173,27 @@ export default {
         },
 
         deleteResource: {
-            type: Function
+            type: Function,
         },
         resourceName: {
             type: String,
-            required: true
-        }
+            required: true,
+        },
     },
     methods: {
         openDeleteModal(field) {
-            this.deleteModalOpen = true
-            this.deleteField = field
+            this.deleteModalOpen = true;
+            this.deleteField = field;
         },
 
         confirmDelete() {
-            this.deleteResource(this.deleteField)
-            this.closeDeleteModal()
+            this.deleteResource(this.deleteField);
+            this.closeDeleteModal();
         },
 
         closeDeleteModal() {
-            this.deleteModalOpen = false
+            this.deleteModalOpen = false;
         },
-
-        
-    }
-}
+    },
+};
 </script>

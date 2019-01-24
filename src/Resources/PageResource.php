@@ -6,7 +6,6 @@ use App\Models\Tenant\Page;
 use App\Nova\Resource;
 use Illuminate\Http\Request;
 use Infinety\TemplyPages\PageConfigurationResourceTool;
-use Infinety\TemplyPages\Resources\TemplateResource;
 use Infinety\TemplyPages\TemplyPagesField;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
@@ -84,8 +83,12 @@ class PageResource extends Resource
                 ->rules('required')
                 ->sortable(),
 
+            Text::make('Template', function () {
+                return '<span class="text-primary">'.$this->template->name.'</span>';
+            })->asHtml()->exceptOnForms(),
+
             BelongsTo::make('Template', 'template', TemplateResource::class)
-                ->nullable(),
+                ->onlyOnForms()->hideWhenUpdating(),
 
             TemplyPagesField::make('data'),
 

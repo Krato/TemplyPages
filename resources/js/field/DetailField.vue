@@ -2,21 +2,21 @@
     <div class="page-resource">
         <div v-for="section in sections" :key="section.name" v-if="!isCustomOrEmpty(section)">
             <!-- Only if section has fields -->
-                <!-- HEADING -->
-                <div class="section-header p-4 text-90 border-b border-40 flex justify-between items-center bg-30">
-                    <h1 class="font-normal text-xl capitalize">{{ section.name }}</h1>
-                    <!-- <span v-on:click.stop="demo">YTest</span> -->
-                </div>
-                <!-- HEADING -->
+            <!-- HEADING -->
+            <div class="section-header p-4 text-90 border-b border-40 flex justify-between items-center bg-30">
+                <h1 class="font-normal text-xl capitalize">{{ section.name }}</h1>
+                <!-- <span v-on:click.stop="demo">YTest</span> -->
+            </div>
+            <!-- HEADING -->
          
-                <template v-for="(children, key, index) in section.children">
-                    <div class="w-full"  :key="key">
-                        <template v-if="children.field.attribute == 'repeater'">
-                            <repeater-field  :realId="key" :field="children" :parentIndex="index" :values="fieldValues"></repeater-field>
-                        </template>  
-                        <component v-else :is="children.field.vue" :errors="errors" :field="children.field"></component>
-                    </div>
-                </template>
+            <template v-for="(children, key, index) in section.children">
+                <div class="w-full"  :key="key">
+                    <template v-if="children.field.attribute == 'repeater'">
+                        <repeater-field  :realId="key" :field="children" :parentIndex="index" :values="fieldValues"></repeater-field>
+                    </template>  
+                    <component v-else :is="children.field.vue" :errors="errors" :field="children.field"></component>
+                </div>
+            </template>
         </div>
 
         <div v-if="isCustom" class="flex border-b border-40">
@@ -27,7 +27,7 @@
             </div>
 
             <div class="w-3/4 py-4">
-                <a class="btn btn-default btn-primary" :href="page.url">{{ __('Click here to edit') }}</a>
+                <a class="btn btn-default btn-primary" :href="page.url">{{ __('Click here to edit') }}</a>
             </div>
             
         </div>
@@ -46,7 +46,7 @@ export default {
         fieldValues: {},
         errors: {},
         isCustom: false,
-        page: {}
+        page: {},
     }),
 
     created() {
@@ -56,30 +56,21 @@ export default {
 
     methods: {
         getInfo() {
-            this.resource.fields.forEach(component => {
-                if (component.attribute == 'template') {
-                    this.templateId = component.belongsToId
+            return api.pageInfo(this.resourceId).then(page => {
+                this.page = page;
+                this.templateId = page.template_id;
+                if (this.templateId == null) {
+                    this.isCustom = true;
+                } else {
+                    this.getTemplateFieldsWithValues(this.templateId);
                 }
-            })
-
-            if (this.templateId == null) {
-                this.isCustom = true
-                this.getPageInfo()
-            } else {
-                this.getTemplateFieldsWithValues(this.templateId)
-            }
+            });
         },
 
         getTemplateFieldsWithValues(templateId) {
             return api.getTemplateFieldsWithValues(this.resourceId, templateId).then(result => {
-                this.sections = result.sections
-                this.fieldValues = result.values
-            });
-        },
-
-        getPageInfo(){
-            return api.pageInfo(this.resourceId).then(page => {
-                this.page = page
+                this.sections = result.sections;
+                this.fieldValues = result.values;
             });
         },
 
@@ -89,25 +80,22 @@ export default {
             }
 
             if (!section.children) {
-                return true
+                return true;
             }
-
 
             if (Object.keys(section.children).length == 0) {
                 return true;
             }
 
             return false;
-        }
+        },
     },
 };
 </script>
 
 <style scoped>
-
-.section-header{
+.section-header {
     margin-left: -24px;
     width: calc(100% + 48px);
 }
-
 </style>
