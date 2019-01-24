@@ -31,6 +31,16 @@ class Template extends Model
     }
 
     /**
+     * TemplateField of template
+     *
+     * @return  \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function group(): BelongsTo
+    {
+        return $this->belongsTo(GroupTemplates::class, 'group_id');
+    }
+
+    /**
      * @return mixed
      */
     public function getFields()

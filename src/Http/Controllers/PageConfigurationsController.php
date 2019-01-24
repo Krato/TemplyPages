@@ -29,8 +29,7 @@ class PageConfigurationsController extends Controller
             $page = Page::find($request->get('page'));
 
             if ($page) {
-                $templateName = $page->template->name;
-                $group = $this->configurationGroup->whereName($templateName)->first();
+                $group = $page->template->group;
 
                 if ($group) {
                     return response()->json([
