@@ -95,7 +95,9 @@ class PageResource extends Resource
                 ->sortable(),
 
             Text::make(__('Template'), function () {
-                return '<span class="text-primary">'.$this->template->name.'</span>';
+                if ($this->template) {
+                    return '<span class="text-primary">'.$this->template->name.'</span>';
+                }
             })->asHtml()->exceptOnForms(),
 
             BelongsTo::make(__('Template'), 'template', TemplateResource::class)
