@@ -13,7 +13,7 @@ class PageResourceTool extends ResourceTool
      */
     public function name()
     {
-        return 'Fields';
+        return __('Fields');
     }
 
     /**

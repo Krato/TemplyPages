@@ -55,7 +55,17 @@ class PageResource extends Resource
      */
     public static function label()
     {
-        return 'Pages';
+        return __('Pages');
+    }
+
+    /**
+     * Get the displayble label of the resource.
+     *
+     * @return string
+     */
+    public static function singularLabel()
+    {
+        return __('Page');
     }
 
     /**
@@ -79,15 +89,16 @@ class PageResource extends Resource
         return [
             ID::make('ID', 'id')
                 ->sortable(),
-            Text::make('Name', 'name')
+
+            Text::make(__('Name'), 'name')
                 ->rules('required')
                 ->sortable(),
 
-            Text::make('Template', function () {
+            Text::make(__('Template'), function () {
                 return '<span class="text-primary">'.$this->template->name.'</span>';
             })->asHtml()->exceptOnForms(),
 
-            BelongsTo::make('Template', 'template', TemplateResource::class)
+            BelongsTo::make(__('Template'), 'template', TemplateResource::class)
                 ->onlyOnForms()->hideWhenUpdating(),
 
             TemplyPagesField::make('data'),
