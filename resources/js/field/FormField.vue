@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="py-6 px-8 w-1/2">
-                    <a class="btn btn-default btn-primary" :href="page.url">{{ __('Click here to edit') }}</a>
+                    <a class="btn btn-default btn-primary" :href="getUrlForBuilder(page.url)" target="_blank">{{ __('Click here to edit') }}</a>
                 </div>
             </div>
         </div>
@@ -80,6 +80,10 @@ export default {
                 this.registerDependencyWatchers(this.$parent);
                 this.updateTemplateFields();
             });
+        },
+
+        getUrlForBuilder(url) {
+            return url + '?edit-page=true?t='+ new Date().getTime();
         },
 
         registerDependencyWatchers(parent) {
