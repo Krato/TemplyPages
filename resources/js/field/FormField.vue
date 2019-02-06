@@ -83,7 +83,7 @@ export default {
         },
 
         getUrlForBuilder(url) {
-            return url + '?edit-page=true?t='+ new Date().getTime();
+            return url + '?edit-page=true&t='+ new Date().getTime();
         },
 
         registerDependencyWatchers(parent) {
