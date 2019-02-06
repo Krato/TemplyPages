@@ -3,7 +3,7 @@
         <template v-if="isCustom">
             <!-- {{ __('This is a custom page and no has predefined designs.') }} -->
             <div class="w-3/4 py-4">
-                <a class="btn btn-default btn-primary" :href="page.url">{{ __('Click here to edit your page') }}</a>
+                <a class="btn btn-default btn-primary" :href="getUrlForBuilder(page.url)" target="_blank">{{ __('Click here to edit your page') }}</a>
             </div>
         </template>
         <template v-if="!isCustom">
@@ -98,6 +98,10 @@ export default {
                     this.configurations = this.parseConfigurations();
                 }
             });
+        },
+
+        getUrlForBuilder(url) {
+            return url + '?edit-page=true?t='+ new Date().getTime();
         },
 
         selectTemplate(template) {

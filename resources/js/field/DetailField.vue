@@ -27,7 +27,7 @@
             </div>
 
             <div class="w-3/4 py-4">
-                <a class="btn btn-default btn-primary" :href="getUrlForBuilder(page.url)">{{ __('Click here to edit') }}</a>
+                <a class="btn btn-default btn-primary" :href="getUrlForBuilder(page.url)" target="__blank">{{ __('Click here to edit') }}</a>
             </div>
             
         </div>
