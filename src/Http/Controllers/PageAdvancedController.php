@@ -2,6 +2,7 @@
 
 namespace Infinety\TemplyPages\Http\Controllers;
 
+use App\Models\System\GroupTemplates;
 use App\Models\Tenant\Page;
 use App\Models\Tenant\Template;
 use Illuminate\Http\Request;
@@ -99,6 +100,10 @@ class PageAdvancedController extends Controller
     {
         $page = Page::find($request->resourceId);
 
+        if (!$page) {
+            return null;
+        }
+
         if ($page->data) {
             $data = json_decode($page->data, true);
         }
@@ -119,6 +124,32 @@ class PageAdvancedController extends Controller
         $template = Template::find($page->template->id);
 
         return response()->json($template->getFieldsToPageWithValues($data ?? []));
+    }
+
+    /**
+     * @param $template
+     * @return mixed
+     */
+    public function getPageTemplatesTypes($template)
+    {
+        if ($template == 1) {
+            $groups = GroupTemplates::whereIn('id', [9, 10, 11])->get();
+        } else {
+            $groups = GroupTemplates::where('id', $template)->get();
+        }
+
+        if (count($groups) > 0) {
+            $list = [];
+            foreach ($groups as $group) {
+                $first = $group->templates->first();
+                $list[] = [
+                    'value'   => $first->id,
+                    'display' => trim(preg_replace('/\d+/u', '', $first->name)),
+                ];
+            }
+
+            return $list;
+        }
     }
 
     /**

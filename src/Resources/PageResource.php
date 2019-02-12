@@ -4,15 +4,19 @@ namespace Infinety\TemplyPages\Resources;
 
 use App\Models\Tenant\Page;
 use App\Nova\Resource;
+use Epartment\NovaDependencyContainer\HasDependencies;
 use Illuminate\Http\Request;
 use Infinety\TemplyPages\PageConfigurationResourceTool;
 use Infinety\TemplyPages\TemplyPagesField;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use NovaAjaxSelect\AjaxSelect;
 
 class PageResource extends Resource
 {
+    use HasDependencies;
+
     /**
      * The model the resource corresponds to.
      *
@@ -102,6 +106,14 @@ class PageResource extends Resource
 
             BelongsTo::make(__('Template'), 'template', TemplateResource::class)
                 ->onlyOnForms()->hideWhenUpdating(),
+
+            AjaxSelect::make(__('Page Type'), 'template_type')
+                ->get('/nova-vendor/infinety/temply-pages/templates-type/{template}')
+                ->parent('template'),
+
+            // NovaDependencyContainer::make([
+            //     Select::make('Page Type', 'template_type')->options($this->getTemplateTypes()),
+            // ])->dependsOn('template_id', '1'),
 
             TemplyPagesField::make('data'),
 

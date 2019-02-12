@@ -25,3 +25,4 @@ Route::get('go-to/{id}', PageAdvancedController::class.'@gotoPage');
 Route::delete('page/{id}/destroy', PageAdvancedController::class.'@destroy');
 Route::get('configurations', PageConfigurationsController::class.'@getConfigurations');
 Route::post('page/set-design', PageAdvancedController::class.'@setDesign');
+Route::get('templates-type/{template}', PageAdvancedController::class.'@getPageTemplatesTypes');

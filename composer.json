@@ -23,9 +23,10 @@
     ],
     "require": {
         "php": ">=7.1.0",
+        "dillingham/nova-ajax-select": "^1.0",
         "epartment/nova-dependency-container": "^1.1",
         "kalnoy/nestedset": "^4.3",
-        "webpatser/laravel-uuid": "^3.0"
+        "webpatser/laravel-uuid": "^3.0",
     },
     "require-dev": {
         "orchestra/testbench": "^3.6",
