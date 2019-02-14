@@ -111,10 +111,6 @@ class PageResource extends Resource
                 ->get('/nova-vendor/infinety/temply-pages/templates-type/{template}')
                 ->parent('template'),
 
-            // NovaDependencyContainer::make([
-            //     Select::make('Page Type', 'template_type')->options($this->getTemplateTypes()),
-            // ])->dependsOn('template_id', '1'),
-
             TemplyPagesField::make('data'),
 
             PageConfigurationResourceTool::make(),
