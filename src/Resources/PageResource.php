@@ -11,6 +11,7 @@ use Infinety\TemplyPages\TemplyPagesField;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use NovaAjaxSelect\AjaxSelect;
 
 class PageResource extends Resource
@@ -32,11 +33,6 @@ class PageResource extends Resource
     public static $title = 'name';
 
     /**
-     * @var string
-     */
-    public static $group = 'Content';
-
-    /**
      * Indicates if the resource should be displayed in the sidebar.
      *
      * @var bool
@@ -51,6 +47,16 @@ class PageResource extends Resource
     public static $search = [
         'id', 'name',
     ];
+
+    /**
+     * Get the displayble group of the resource
+     *
+     * @return  string
+     */
+    public static function group()
+    {
+        return __('General');
+    }
 
     /**
      * Get the displayble label of the resource.
@@ -159,5 +165,30 @@ class PageResource extends Resource
     public function actions(Request $request)
     {
         return [];
+    }
+
+    /**
+     * Build an "index" query for the given resource.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        $whereNot = collect([]);
+        if (setting('resource_groups', 'default') == false) {
+            $whereNot->push([7, 8]);
+        }
+
+        if (setting('resource_ministeries', 'default') == false) {
+            $whereNot->push([4, 5]);
+        }
+
+        if (setting('resource_sermons', 'default') == false) {
+            $whereNot->push(6);
+        }
+
+        return $query->whereNotIn('template_id', $whereNot->flatten()->values());
     }
 }
