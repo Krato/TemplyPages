@@ -98,6 +98,7 @@ class PageResource extends Resource
     {
         return [
             ID::make('ID', 'id')
+                ->hideFromIndex()
                 ->sortable(),
 
             Text::make(__('Name'), 'name')
@@ -189,6 +190,6 @@ class PageResource extends Resource
             $whereNot->push(6);
         }
 
-        return $query->whereNotIn('template_id', $whereNot->flatten()->values());
+        return $query->where('type', 2)->whereNotIn('template_id', $whereNot->flatten()->values());
     }
 }

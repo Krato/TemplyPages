@@ -34,6 +34,13 @@ class TemplateResource extends Resource
     public static $displayInNavigation = false;
 
     /**
+     * Indicates if the resoruce should be globally searchable.
+     *
+     * @var bool
+     */
+    public static $globallySearchable = false;
+
+    /**
      * The columns that should be searched.
      *
      * @var  array
