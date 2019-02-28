@@ -154,6 +154,10 @@ class CreateField
             $this->trixField();
         }
 
+        if (str_contains($this->component, 'redactor')) {
+            $this->redactorField();
+        }
+
         if (str_contains($this->component, 'markdown')) {
             $this->markdownField();
         }
@@ -331,6 +335,18 @@ class CreateField
         $newData = [
             'component' => 'trix-field',
             'vue'       => $this->getCorrectVueComponent('form-trix-field'),
+            'withFiles' => (isset($this->jsonData['disk']) && !empty($this->jsonData['disk'])) ? true : false,
+        ];
+
+        $this->data = array_merge($this->data, $newData);
+    }
+
+    private function redactorField()
+    {
+        $newData = [
+            'component' => 'redactor-field',
+            'vue'       => $this->getCorrectVueComponent('form-temply-redactor-field'),
+            'language'  => app()->getLocale(),
             'withFiles' => (isset($this->jsonData['disk']) && !empty($this->jsonData['disk'])) ? true : false,
         ];
 

@@ -139,6 +139,16 @@
                         </div>
                     </template>
 
+
+                    <template v-if="item.type == 'redactor'">
+                        <div class="w-1/3 px-2 mb-4">
+                            <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mr-2 mb-2" :for="item.id+'_withPublic'">
+                                {{ __('Disk') }}
+                            </label>
+                            <input class="w-full form-control form-input form-input-bordered py-3 px-4" type="text" :id="item.id+'_withPublic'" v-model="item.extras.withPublic" autocomplete="off">
+                        </div>
+                    </template>
+
                     <div class="w-full flex flex-wrap">
 
                         <div class="w-3/4 px-2 mb-4">

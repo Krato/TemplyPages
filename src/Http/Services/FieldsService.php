@@ -25,6 +25,7 @@ class FieldsService
                 'Editors'      => [
                     $this->markdownField(),
                     $this->trixField(),
+                    $this->redactorField(),
                 ],
                 'Files'        => [
                     $this->fileField(),
@@ -240,6 +241,16 @@ class FieldsService
     private function trixField()
     {
         return new Field(['id' => 18, 'type' => 'trix', 'component' => 'trix-field', 'name' => 'Trix']);
+    }
+
+    /**
+     * Redactor field
+     *
+     * @return  \Infinety\TemplyPages\Http\Services\Field
+     */
+    private function redactorField()
+    {
+        return new Field(['id' => 18, 'type' => 'redactor', 'component' => 'redactor-field', 'name' => 'Redactor']);
     }
 
     /**

@@ -31,7 +31,7 @@ class TemplateResource extends Resource
      *
      * @var bool
      */
-    public static $displayInNavigation = false;
+    public static $displayInNavigation = true;
 
     /**
      * Indicates if the resoruce should be globally searchable.
