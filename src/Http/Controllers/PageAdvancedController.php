@@ -133,7 +133,7 @@ class PageAdvancedController extends Controller
     public function getPageTemplatesTypes($template)
     {
         if ($template == 1) {
-            $groups = GroupTemplates::whereIn('id', [9, 10, 11])->get();
+            $groups = GroupTemplates::whereIn('id', [9, 10, 11, 12])->get();
         } else {
             $groups = GroupTemplates::where('id', $template)->get();
         }
