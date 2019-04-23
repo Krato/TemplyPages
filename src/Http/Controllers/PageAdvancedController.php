@@ -130,22 +130,25 @@ class PageAdvancedController extends Controller
      * @param $template
      * @return mixed
      */
-    public function getPageTemplatesTypes($template)
+    public function getPageTemplatesTypes(Template $template)
     {
-        if ($template == 1) {
+        if ($template->group_id == 1) {
             $groups = GroupTemplates::whereIn('id', [9, 10, 11, 12])->get();
         } else {
-            $groups = GroupTemplates::where('id', $template)->get();
+            $groups = GroupTemplates::where('id', $template->group_id)->get();
         }
 
         if (count($groups) > 0) {
             $list = [];
             foreach ($groups as $group) {
-                $first = $group->templates->first();
-                $list[] = [
-                    'value'   => $first->id,
-                    'display' => trim(preg_replace('/\d+/u', '', $first->name)),
-                ];
+                $templates = $group->templates;
+
+                foreach ($templates as $templateData) {
+                    $list[] = [
+                        'value'   => $templateData->id,
+                        'display' => trim(preg_replace('/\d+/u', '', $templateData->name)),
+                    ];
+                }
             }
 
             return $list;
