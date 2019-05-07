@@ -3,18 +3,30 @@
         <div v-for="section in sections" :key="section.name" v-if="!isCustomOrEmpty(section)">
             <!-- Only if section has fields -->
             <!-- HEADING -->
-            <div class="section-header p-4 text-90 border-b border-40 flex justify-between items-center bg-30">
+            <div
+                class="section-header p-4 text-90 border-b border-40 flex justify-between items-center bg-30"
+            >
                 <h1 class="font-normal text-xl capitalize">{{ section.name }}</h1>
                 <!-- <span v-on:click.stop="demo">YTest</span> -->
             </div>
             <!-- HEADING -->
-         
+
             <template v-for="(children, key, index) in section.children">
-                <div class="w-full"  :key="key">
+                <div class="w-full" :key="key">
                     <template v-if="children.field.attribute == 'repeater'">
-                        <repeater-field  :realId="key" :field="children" :parentIndex="index" :values="fieldValues"></repeater-field>
-                    </template>  
-                    <component v-else :is="children.field.vue" :errors="errors" :field="children.field"></component>
+                        <repeater-field
+                            :realId="key"
+                            :field="children"
+                            :parentIndex="index"
+                            :values="fieldValues"
+                        ></repeater-field>
+                    </template>
+                    <component
+                        v-else
+                        :is="children.field.vue"
+                        :errors="errors"
+                        :field="children.field"
+                    ></component>
                 </div>
             </template>
         </div>
@@ -27,9 +39,13 @@
             </div>
 
             <div class="w-3/4 py-4">
-                <a class="btn btn-default btn-primary" :href="getUrlForBuilder(page.url)" target="__blank">{{ __('Click here to edit') }}</a>
+                <a
+                    class="btn btn-default btn-primary"
+                    :href="getUrlForBuilder(page.url)"
+                    target="__blank"
+                    >{{ __('Click here to edit') }}</a
+                >
             </div>
-            
         </div>
     </div>
 </template>
@@ -68,7 +84,7 @@ export default {
         },
 
         getUrlForBuilder(url) {
-            return url + '?edit-page=true&t='+ new Date().getTime();
+            return url + '?edit-page=true&t=' + new Date().getTime();
         },
 
         getTemplateFieldsWithValues(templateId) {

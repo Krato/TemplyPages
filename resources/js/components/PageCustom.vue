@@ -6,23 +6,30 @@
             <div class="relative h-9 flex items-center mb-6">
                 <icon type="search" class="absolute ml-3 text-70" />
 
-                <input v-model="search"
-                       class="appearance-none form-control form-input w-search pl-search"
-                       placeholder="Search"
-                       type="search"
-                >
+                <input
+                    v-model="search"
+                    class="appearance-none form-control form-input w-search pl-search"
+                    placeholder="Search"
+                    type="search"
+                />
             </div>
 
             <span class="ml-auto mb-6">
-                <button @click="createModalOpened = !createModalOpened"
-                        class="btn btn-default btn-primary"
-                >{{ __('Create') }}
+                <button
+                    @click="createModalOpened = !createModalOpened"
+                    class="btn btn-default btn-primary"
+                >
+                    {{ __('Create') }}
                 </button>
             </span>
         </div>
 
         <card>
-            <custom-table :fields="filteredFields" :sort="sortBy" :resourceName="resourceName" :deleteResource="deleteResource"
+            <custom-table
+                :fields="filteredFields"
+                :sort="sortBy"
+                :resourceName="resourceName"
+                :deleteResource="deleteResource"
             ></custom-table>
         </card>
 
@@ -36,7 +43,9 @@
                     :width="400"
                 >
                     <div slot="container">
-                        <h2 class="mb-6 text-90 font-normal text-xl">{{ __('Create new') }} {{ __('page') }}</h2>
+                        <h2 class="mb-6 text-90 font-normal text-xl">
+                            {{ __('Create new') }} {{ __('page') }}
+                        </h2>
                         <p class="text-80 leading-normal">
                             {{ __('What kind of oage you want to create') }}
                         </p>

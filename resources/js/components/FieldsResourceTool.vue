@@ -1,61 +1,151 @@
 <template>
     <div class="flex flex-wrap py-4 demo">
         <div class="w-full">
-            <template  v-for="section in orderedSections">
-                <div id="template-fields" class="card overflow-hidden section flex-flex-wrap mb-4 " v-bind:key="section.id">
+            <template v-for="section in orderedSections">
+                <div
+                    id="template-fields"
+                    class="card overflow-hidden section flex-flex-wrap mb-4 "
+                    v-bind:key="section.id"
+                >
                     <div class="header w-full flex flex-wrap justify-around items-center">
                         <div class="w-1/2 flex flex-wrap items-center">
-                            {{ section.name }} 
-                            <input type="text" class="w-auto form-control form-input text-xs ml-3" :placeholder="__('Name')" v-model="section.name">
+                            {{ section.name }}
+                            <input
+                                type="text"
+                                class="w-auto form-control form-input text-xs ml-3"
+                                :placeholder="__('Name')"
+                                v-model="section.name"
+                            />
                         </div>
                         <div class="w-1/2 fields flex flex-wrap justify-end ">
                             <div class="w-2/3 flex flex-wrap justify-end">
-                                <select class="w-2/3 form-control form-select" :id="section.id+'_code_language'" v-model="section.selectedField">
+                                <select
+                                    class="w-2/3 form-control form-select"
+                                    :id="section.id + '_code_language'"
+                                    v-model="section.selectedField"
+                                >
                                     <option disabled="disabled" selected="selected" :value="null">
                                         {{ __('Choose a field') }}
                                     </option>
-                                    <optgroup v-for="(fieldGroup, groupKey) in fields" :label="groupKey" :key="groupKey">
-                                        <option v-for="(field, key) in fieldGroup" :value="field" :key="key">{{ field.name }}</option>    
+                                    <optgroup
+                                        v-for="(fieldGroup, groupKey) in fields"
+                                        :label="groupKey"
+                                        :key="groupKey"
+                                    >
+                                        <option
+                                            v-for="(field, key) in fieldGroup"
+                                            :value="field"
+                                            :key="key"
+                                            >{{ field.name }}</option
+                                        >
                                     </optgroup>
                                 </select>
-                                <button class="btn btn-default btn-primary mx-2" @click="addField(section)">{{ __('Add') }}</button>
+                                <button
+                                    class="btn btn-default btn-primary mx-2"
+                                    @click="addField(section)"
+                                >
+                                    {{ __('Add') }}
+                                </button>
                             </div>
 
                             <div class="pl-2 flex content-center ">
-
-
-                                <template  v-if="section.first">
-                                    <button class="btn btn-move btn-primary mx-1" @click="moveDown(section)">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="fill-current"><path fill-rule="nonzero" d="M15.3 9.3a1 1 0 0 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 1.4-1.4l3.3 3.29 3.3-3.3z"/></svg>
+                                <template v-if="section.first">
+                                    <button
+                                        class="btn btn-move btn-primary mx-1"
+                                        @click="moveDown(section)"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            width="24"
+                                            height="24"
+                                            class="fill-current"
+                                        >
+                                            <path
+                                                fill-rule="nonzero"
+                                                d="M15.3 9.3a1 1 0 0 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 1.4-1.4l3.3 3.29 3.3-3.3z"
+                                            />
+                                        </svg>
                                     </button>
                                 </template>
 
-                                <template  v-else-if="section.last">
-                                    <button class="btn btn-move btn-primary mx-1" @click="moveUp(section)">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="fill-current"><path fill-rule="nonzero"  d="M8.7 14.7a1 1 0 0 1-1.4-1.4l4-4a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1-1.4 1.4L12 11.42l-3.3 3.3z"/></svg>
+                                <template v-else-if="section.last">
+                                    <button
+                                        class="btn btn-move btn-primary mx-1"
+                                        @click="moveUp(section)"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            width="24"
+                                            height="24"
+                                            class="fill-current"
+                                        >
+                                            <path
+                                                fill-rule="nonzero"
+                                                d="M8.7 14.7a1 1 0 0 1-1.4-1.4l4-4a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1-1.4 1.4L12 11.42l-3.3 3.3z"
+                                            />
+                                        </svg>
                                     </button>
                                 </template>
 
-                                <template  v-else>
-                                    <button class="btn btn-move btn-primary mx-1" @click="moveDown(section)">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="fill-current"><path fill-rule="nonzero" d="M15.3 9.3a1 1 0 0 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 1.4-1.4l3.3 3.29 3.3-3.3z"/></svg>
+                                <template v-else>
+                                    <button
+                                        class="btn btn-move btn-primary mx-1"
+                                        @click="moveDown(section)"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            width="24"
+                                            height="24"
+                                            class="fill-current"
+                                        >
+                                            <path
+                                                fill-rule="nonzero"
+                                                d="M15.3 9.3a1 1 0 0 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 1.4-1.4l3.3 3.29 3.3-3.3z"
+                                            />
+                                        </svg>
                                     </button>
 
-                                    <button class="btn btn-move btn-primary mx-1" @click="moveUp(section)">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="fill-current"><path fill-rule="nonzero"  d="M8.7 14.7a1 1 0 0 1-1.4-1.4l4-4a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1-1.4 1.4L12 11.42l-3.3 3.3z"/></svg>
+                                    <button
+                                        class="btn btn-move btn-primary mx-1"
+                                        @click="moveUp(section)"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            width="24"
+                                            height="24"
+                                            class="fill-current"
+                                        >
+                                            <path
+                                                fill-rule="nonzero"
+                                                d="M8.7 14.7a1 1 0 0 1-1.4-1.4l4-4a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1-1.4 1.4L12 11.42l-3.3 3.3z"
+                                            />
+                                        </svg>
                                     </button>
                                 </template>
-                                
                             </div>
                         </div>
                     </div>
 
-                    <draggable ref="panel-template" id="fieldlist" class="dragArea py-3" :class="{ 'placeholder': section.children.length == 0 }" v-model="section.children" :options="fieldsTemplateDragOption">
-
+                    <draggable
+                        ref="panel-template"
+                        id="fieldlist"
+                        class="dragArea py-3"
+                        :class="{ placeholder: section.children.length == 0 }"
+                        v-model="section.children"
+                        :options="fieldsTemplateDragOption"
+                    >
                         <template v-for="(item, indexItem) in section.children">
-                            <field-template v-bind:key="indexItem" :item="item" :fields="fields" v-on:removeField="removeField"></field-template>
+                            <field-template
+                                v-bind:key="indexItem"
+                                :item="item"
+                                :fields="fields"
+                                v-on:removeField="removeField"
+                            ></field-template>
                         </template>
-                            
                     </draggable>
                 </div>
             </template>
@@ -63,10 +153,16 @@
 
         <div class="buttons-section bg-30  w-full flex px-8 py-4 mt-4 border border-60">
             <div class="w-2/3 pl-2">
-                <button class="btn btn-default btn-primary" @click="addSection">{{ __('Add section') }}</button>
+                <button class="btn btn-default btn-primary" @click="addSection">
+                    {{ __('Add section') }}
+                </button>
             </div>
 
-            <button class="ml-auto btn btn-default btn-primary mr-3" @click="saveFields" type="button">
+            <button
+                class="ml-auto btn btn-default btn-primary mr-3"
+                @click="saveFields"
+                type="button"
+            >
                 <template v-if="saving">
                     {{ __('Saving') }}
                 </template>

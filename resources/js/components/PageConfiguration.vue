@@ -1,13 +1,17 @@
-<template> 
+<template>
     <div>
         <template v-if="isCustom">
             <!-- {{ __('This is a custom page and no has predefined designs.') }} -->
             <div class="w-3/4 py-4">
-                <a class="btn btn-default btn-primary" :href="getUrlForBuilder(page.url)" target="_blank">{{ __('Click here to edit your page') }}</a>
+                <a
+                    class="btn btn-default btn-primary"
+                    :href="getUrlForBuilder(page.url)"
+                    target="_blank"
+                    >{{ __('Click here to edit your page') }}</a
+                >
             </div>
         </template>
         <template v-if="!isCustom">
-
             <div class="flex justify-end menu-button">
                 <button
                     title="Add"
@@ -20,31 +24,36 @@
 
             <div class="">
                 <div class="mt-4 flex flex-wrap  flex -mx-2">
-                    <div class="w-1/5 px-2"  v-for="(template, index) in configurations" :key="index" @click="selectTemplate(template)">
+                    <div
+                        class="w-1/5 px-2"
+                        v-for="(template, index) in configurations"
+                        :key="index"
+                        @click="selectTemplate(template)"
+                    >
                         <div class="get-preview cursor-pointer hover:opacity-50">
-                            <div class="bg-custom bg-white w-full rounded shadow-md p-4" :class="{'active' : template.selected, 'choosen': isChoosen(template) }">
+                            <div
+                                class="bg-custom bg-white w-full rounded shadow-md p-4"
+                                :class="{ active: template.selected, choosen: isChoosen(template) }"
+                            >
                                 <div class="flex flex-wrap">
                                     <div class="w-1/5 border-r border-60 mr-4">
                                         <span class="text-5xl ">{{ index + 1 }}</span>
                                     </div>
                                     <div class="flex flex-col w-2/3  justify-center">
-                                        <h5 class="group font-medium uppercase">{{ group.name }} {{ __('template') }}</h5>
+                                        <h5 class="group font-medium uppercase">
+                                            {{ group.name }} {{ __('template') }}
+                                        </h5>
                                         <h3 class="uppercase">{{ template.name }}</h3>
                                     </div>
-                                    
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-
-
             <div class="">
                 <div id="preview" class="flex mt-4 mx-2 shadow-md" v-if="currentTemplate">
-
                     <div class="bg-80 w-full rounded border border-80 px-1 h-full min-h-full">
                         <div class="flex flex-wrap justify-between items-center">
                             <div class="bg-80 h-8 flex flex-wrap items-center ml-1">
@@ -53,17 +62,20 @@
                                 <div class="h-3 w-3 ml-1 rounded-full bg-success"></div>
                             </div>
                             <div class="text-sm pr-1">
-                                <a :href="previewUrl" target="_blank" class="no-underline text-white-50%">
-                                    {{ __('Open in new tab') }} <i class="fas fa-external-link-alt"></i>
+                                <a
+                                    :href="previewUrl"
+                                    target="_blank"
+                                    class="no-underline text-white-50%"
+                                >
+                                    {{ __('Open in new tab') }}
+                                    <i class="fas fa-external-link-alt"></i>
                                 </a>
                             </div>
                         </div>
                         <div class="iframe-container">
                             <iframe class="iframe" :src="previewUrl"></iframe>
                         </div>
-                        
                     </div>
-
                 </div>
             </div>
         </template>
@@ -86,7 +98,7 @@ export default {
 
     methods: {
         getConfigurations() {
-            return api.configurations(this.resourceId).then(result => {
+            return api.configurations(this.realResourceId).then(result => {
                 this.page = result.page;
                 this.isCustom = result.isCustom;
                 if (this.isCustom) {
@@ -101,7 +113,7 @@ export default {
         },
 
         getUrlForBuilder(url) {
-            return url + '?edit-page=true&t='+ new Date().getTime();
+            return url + '?edit-page=true&t=' + new Date().getTime();
         },
 
         selectTemplate(template) {
@@ -124,7 +136,7 @@ export default {
 
         saveDesign() {
             this.currentTemplate;
-            return api.setDesign(this.resourceId, this.currentTemplate.id).then(() => {
+            return api.setDesign(this.realResourceId, this.currentTemplate.id).then(() => {
                 this.$toasted.show(this.__('Design saved!'), { type: 'success' });
                 this.previewUrl = '';
                 this.resetSelecteds();
@@ -148,7 +160,17 @@ export default {
         },
     },
 
-    computed: {},
+    computed: {
+        realResourceId() {
+            let resourceId = this.resourceId;
+
+            if (this.field.resourceId) {
+                resourceId = this.field.resourceId;
+            }
+
+            return resourceId;
+        },
+    },
 
     async created() {
         // this.$parent.$parent.panel.component = 'card'
@@ -200,5 +222,4 @@ export default {
     width: 100%
     height: 100%
     border: 0
-
 </style>

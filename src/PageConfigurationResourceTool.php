@@ -17,6 +17,17 @@ class PageConfigurationResourceTool extends ResourceTool
     }
 
     /**
+     * Set custom resource for the Resource Tool
+     *
+     * @param $id
+     * @return $this
+     */
+    public function resourceId($id)
+    {
+        return $this->withMeta(['resourceId' => $id]);
+    }
+
+    /**
      * Get the component name for the resource tool.
      *
      * @return string

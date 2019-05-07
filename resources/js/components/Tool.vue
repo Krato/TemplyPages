@@ -1,4 +1,4 @@
-<template> 
+<template>
     <resource-index :resourceName="'temply-pages-templates'"></resource-index>
 </template>
 
