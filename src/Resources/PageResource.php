@@ -2,7 +2,6 @@
 
 namespace Infinety\TemplyPages\Resources;
 
-use App\Models\System\GroupTemplates;
 use App\Models\Tenant\Page;
 use App\Nova\Resource;
 use Epartment\NovaDependencyContainer\HasDependencies;
@@ -191,14 +190,14 @@ class PageResource extends Resource
             $whereNot->push(6);
         }
 
-        $galleriesTemplatesIds = [];
-        $galleriesTemplates = GroupTemplates::find(13)->templates;
-        if (count($galleriesTemplates) > 0) {
-            $galleriesTemplatesIds = $galleriesTemplates->pluck('id');
-        }
+        // $galleriesTemplatesIds = [];
+        // $galleriesTemplates = GroupTemplates::find(13)->templates;
+        // if (count($galleriesTemplates) > 0) {
+        //     $galleriesTemplatesIds = $galleriesTemplates->pluck('id');
+        // }
 
         return $query->where('type', 2)
-            ->orWhereIn('template_type', $galleriesTemplatesIds)
+        // ->orWhereIn('template_type', $galleriesTemplatesIds)
             ->whereNotIn('template_id', $whereNot->flatten()->values());
     }
 }
