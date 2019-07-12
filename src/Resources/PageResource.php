@@ -8,11 +8,10 @@ use Epartment\NovaDependencyContainer\HasDependencies;
 use Illuminate\Http\Request;
 use Infinety\TemplyPages\PageConfigurationResourceTool;
 use Infinety\TemplyPages\TemplyPagesField;
-use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use NovaAjaxSelect\AjaxSelect;
 
 class PageResource extends Resource
 {
@@ -99,6 +98,7 @@ class PageResource extends Resource
         return [
             ID::make('ID', 'id')
                 ->hideFromIndex()
+                ->hideFromDetail()
                 ->sortable(),
 
             Text::make(__('Name'), 'name')
@@ -111,12 +111,16 @@ class PageResource extends Resource
                 }
             })->asHtml()->exceptOnForms(),
 
-            BelongsTo::make(__('Template'), 'template', TemplateResource::class)
-                ->onlyOnForms()->hideWhenUpdating(),
+            Select::make(__('Template'), 'template_id')->options([
+                1 => 'Personalizada',
+            ])->withMeta(['value' => 1])->displayUsingLabels()->hideFromIndex()->hideFromDetail()->hideWhenUpdating(),
 
-            AjaxSelect::make(__('Page Type'), 'template_type')
-                ->get('/nova-vendor/infinety/temply-pages/templates-type/{template}')
-                ->parent('template'),
+            // BelongsTo::make(__('Template'), 'template', TemplateResource::class)
+            //     ->onlyOnForms()->hideWhenUpdating(),
+
+            // AjaxSelect::make(__('Page Type'), 'template_type')
+            //     ->get('/nova-vendor/infinety/temply-pages/templates-type/{template}')
+            //     ->parent('template'),
 
             TemplyPagesField::make('data'),
 
