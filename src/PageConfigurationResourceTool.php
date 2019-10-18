@@ -7,6 +7,11 @@ use Laravel\Nova\ResourceTool;
 class PageConfigurationResourceTool extends ResourceTool
 {
     /**
+     * @var string
+     */
+    public $toolComponent = 'page-configuration';
+
+    /**
      * Get the displayable name of the resource tool.
      *
      * @return string
@@ -32,8 +37,8 @@ class PageConfigurationResourceTool extends ResourceTool
      *
      * @return string
      */
-    public function component()
-    {
-        return 'page-configuration';
-    }
+    // public function component()
+    // {
+    //     return 'page-configuration';
+    // }
 }
